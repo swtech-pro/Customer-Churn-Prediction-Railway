@@ -16,7 +16,7 @@ try:
     print("Model loaded successfully")
 except Exception as e:
     model = None
-    print("Error loading model:", e)
+    print("Error loading model....:", e)
 
 @app.post("/predict_churn")
 async def predict_churn(request: Request):
