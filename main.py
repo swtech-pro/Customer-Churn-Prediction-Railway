@@ -11,10 +11,12 @@ def read_root():
 
 # Load model safely
 try:
-    model = joblib.load("churn_model.pkl")
+    with open("churn_model.pkl", "rb") as f:
+        model = joblib.load(f)
+    print("Model loaded successfully")
 except Exception as e:
     model = None
-    print("❌ Error loading model:", e)
+    print("Error loading model:", e)
 
 @app.post("/predict_churn")
 async def predict_churn(request: Request):
