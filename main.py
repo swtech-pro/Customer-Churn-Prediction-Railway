@@ -5,13 +5,16 @@ import numpy as np
 
 app = FastAPI()
 
-# Load model from local file
-model = joblib.load("churn_model.pkl")
-
 @app.get("/")
-def health():
-    return {"status": "running", "model_loaded": model is not None}
+def read_root():
+    return {"message": "Customer Churn Prediction API is running."}
 
+# Load model safely
+try:
+    model = joblib.load("churn_model.pkl")
+except Exception as e:
+    model = None
+    print("❌ Error loading model:", e)
 
 @app.post("/predict_churn")
 async def predict_churn(request: Request):
