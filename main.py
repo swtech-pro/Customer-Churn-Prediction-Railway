@@ -8,6 +8,11 @@ app = FastAPI()
 # Load model from local file
 model = joblib.load("churn_model.pkl")
 
+@app.get("/")
+def health():
+    return {"status": "running", "model_loaded": model is not None}
+
+
 @app.post("/predict_churn")
 async def predict_churn(request: Request):
     try:
